@@ -47,10 +47,7 @@ public class UserControllerTest {
 
     @BeforeEach
     public void setUp() {
-        validUserId = UUID.randomUUID().toString();;
-
         validUserRequest = new UserRequest();
-        validUserRequest.setId(validUserId);
         validUserRequest.setUserName("jianping");
         validUserRequest.setPassword("abcEFG@123");
 
