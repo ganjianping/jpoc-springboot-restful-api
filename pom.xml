@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.ganjp</groupId>
 	<artifactId>jpoc</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>jpoc</name>
 	<description>Jianping POC project for Spring Boot</description>
 	<properties>
