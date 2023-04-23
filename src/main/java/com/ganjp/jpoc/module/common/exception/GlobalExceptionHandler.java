@@ -3,6 +3,7 @@ package com.ganjp.jpoc.module.common.exception;
 import com.ganjp.jpoc.module.common.response.ErrorResponse;
 import com.ganjp.jpoc.module.common.response.ResultCode;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -48,5 +49,15 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse(ResultCode.INVALID_ARGUMENT, errors);
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(InvalidDataAccessApiUsageException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidDataAccessApiUsageException(InvalidDataAccessApiUsageException ex) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("exception", ex.getMessage());
+
+        ErrorResponse errorResponse = new ErrorResponse(ResultCode.INVALID_ARGUMENT, errors);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+
 
 }

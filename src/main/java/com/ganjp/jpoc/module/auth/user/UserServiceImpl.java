@@ -1,8 +1,10 @@
 package com.ganjp.jpoc.module.auth.user;
 
+import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,6 +23,28 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<UserEntity> getUsers(Pageable pageable) {
         return userRepository.findAll(pageable);
+    }
+
+    public Page<UserEntity> getUsers(String userName, String nickName, String mobileNumber, String email, String status, Pageable pageable) {
+        Specification<UserEntity> spec = Specification.where(null);
+        if (!StringUtils.isEmpty(userName)) {
+            spec = spec.and(UserSpecifications.userNameContains(userName));
+        }
+        if (!StringUtils.isEmpty(nickName)) {
+            spec = spec.and(UserSpecifications.nickNameContains(nickName));
+        }
+        if (!StringUtils.isEmpty(mobileNumber)) {
+            spec = spec.and(UserSpecifications.mobileNumberContains(mobileNumber));
+        }
+        if (!StringUtils.isEmpty(email)) {
+            spec = spec.and(UserSpecifications.emailContains(email));
+        }
+        if (!StringUtils.isEmpty(status)) {
+            spec = spec.and(UserSpecifications.statusIs(status));
+        }
+        spec = spec.and(UserSpecifications.isDeletedFalse());
+
+        return userRepository.findAll(spec, pageable);
     }
 
     @Override

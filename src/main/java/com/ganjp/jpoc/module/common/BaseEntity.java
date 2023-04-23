@@ -35,14 +35,6 @@ public abstract class BaseEntity implements Serializable {
     @Column(name = "is_deleted")
     private boolean isDeleted;
 
-    public boolean isDeleted() {
-        return isDeleted;
-    }
-
-    public void setDeleted(boolean isDeleted) {
-        this.isDeleted = isDeleted;
-    }
-
     @PrePersist
     protected void onCreate() {
         if (!StringUtils.hasText(id)) {

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/auth/users")
+@RequestMapping("/v1/auth/users")
 public class UserController {
 
     @Autowired
@@ -39,10 +39,16 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<Page<UserEntity>>> getUsers(@RequestParam(defaultValue = "0") int page,
-                                                            @RequestParam(defaultValue = "10") int size) {
+    public ResponseEntity<ApiResponse<Page<UserEntity>>> getUsers(
+            @RequestParam(defaultValue = "") String userName,
+            @RequestParam(defaultValue = "") String nickName,
+            @RequestParam(defaultValue = "") String mobileNumber,
+            @RequestParam(defaultValue = "") String email,
+            @RequestParam(defaultValue = "") String status,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<UserEntity> users = userService.getUsers(pageable);
+         Page<UserEntity> users = userService.getUsers(userName, nickName, mobileNumber, email, status, pageable);
         if (users.hasContent()) {
             SuccessResponse<Page<UserEntity>> response = new SuccessResponse<>(users, ResultCode.USERS_FOUND);
             return ResponseEntity.ok(response);
@@ -51,6 +57,7 @@ public class UserController {
             return ResponseEntity.ok(response);
         }
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse> updateUser(@PathVariable String id, @Valid @RequestBody UserRequest userRequest) {

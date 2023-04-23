@@ -10,6 +10,8 @@ public interface UserService {
 
     Page<UserEntity> getUsers(Pageable pageable);
 
+    Page<UserEntity> getUsers(String userName, String nickName, String mobileNumber, String email, String status, Pageable pageable);
+
     UserEntity createUser(UserRequest userRequest);
 
     Optional<UserEntity> updateUser(String id, UserRequest userRequest);
