@@ -11,15 +11,15 @@ import org.springframework.util.StringUtils;
 @Setter
 public class UserRequest {
 
-    @Pattern(regexp = "[a-zA-Z0-9_-]{5,20}", message = "User name must contain 5-20 characters, including letters, digits, underscores, and hyphens")
+    @Pattern(regexp = "$|[a-zA-Z0-9_-]{5,20}", message = "User name must contain 5-20 characters, including letters, digits, underscores, and hyphens")
     private String userName;
 
     private String nickName;
 
-    @Pattern(regexp = "[0-9]{2,4}", message = "Mobile country code must be between 1 and 4 digits")
+    @Pattern(regexp = "$|[0-9]{2,4}", message = "Mobile country code must be between 1 and 4 digits")
     private String mobileCountryCode;
 
-    @Pattern(regexp = "[0-9]{6,15}", message = "Mobile number must contain 6-15 digits")
+    @Pattern(regexp = "$|[0-9]{6,15}", message = "Mobile number must contain 6-15 digits")
     private String mobileNumber;
 
     @Email(message = "Invalid email")

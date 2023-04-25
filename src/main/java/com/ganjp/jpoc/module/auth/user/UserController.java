@@ -46,7 +46,7 @@ public class UserController {
             @RequestParam(defaultValue = "") String email,
             @RequestParam(defaultValue = "") String status,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "50") int size) {
         Pageable pageable = PageRequest.of(page, size);
          Page<UserEntity> users = userService.getUsers(userName, nickName, mobileNumber, email, status, pageable);
         if (users.hasContent()) {
@@ -57,7 +57,6 @@ public class UserController {
             return ResponseEntity.ok(response);
         }
     }
-
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse> updateUser(@PathVariable String id, @Valid @RequestBody UserRequest userRequest) {

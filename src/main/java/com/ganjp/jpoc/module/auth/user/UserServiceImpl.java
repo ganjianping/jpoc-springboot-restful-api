@@ -3,7 +3,9 @@ package com.ganjp.jpoc.module.auth.user;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +46,9 @@ public class UserServiceImpl implements UserService {
         }
         spec = spec.and(UserSpecifications.isDeletedFalse());
 
-        return userRepository.findAll(spec, pageable);
+        Pageable pageableWithSort = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.DESC, "updatedDate"));
+        return userRepository.findAll(spec, pageableWithSort);
+
     }
 
     @Override
